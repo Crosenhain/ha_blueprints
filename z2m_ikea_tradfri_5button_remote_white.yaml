@@ -63,13 +63,15 @@ trigger:
     domain: mqtt
     device_id: !input remote
     type: action
+    subtype: toggle
+    id: 'toggle'
 
 action:
   - choose:
       # Short-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ trigger.device.type.subtype == "toggle" }}'
+            value_template: '{{ trigger.id == "toggle" }}'
         sequence:
           - service: light.toggle
             target:
