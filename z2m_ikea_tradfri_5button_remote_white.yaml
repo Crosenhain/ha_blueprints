@@ -34,7 +34,7 @@ blueprint:
               model: TRADFRI remote control (E1524/E1810)
     action_entity:
       name: Action Entity
-      description: Pick the Action eneity
+      description: Pick the Action entity
       selector:
         entity:
           filter:
@@ -67,15 +67,14 @@ variables:
 
 trigger:
   - platform: state
-    entity_id: !input remote
-    type: action
+    entity_id: !input action_entity
 
 action:
   - choose:
       # Short-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ trigger.id == "toggle" }}'
+            value_template: '{{ trigger.to_state.state == "toggle" }}'
         sequence:
           - service: light.toggle
             target:
