@@ -27,7 +27,7 @@ blueprint:
       name: IKEA TRADFRI remote control
       description: Select the remote control you wish to use.
       selector:
-        entity:
+        device:
           filter:
             - integration: mqtt
               manufacturer: IKEA
@@ -67,7 +67,7 @@ action:
       # Short-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "toggle" }}'
+            value_template: '{{ sensor.kitchen_light_switch_action == "toggle" }}'
         sequence:
           - service: light.toggle
             target:
