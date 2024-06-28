@@ -89,7 +89,7 @@ action:
       # Long-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "toggle_hole" }}'
+            value_template: '{{ event == "toggle_hold" }}'
         sequence:
           - service: light.turn_on
             target:
@@ -116,7 +116,9 @@ action:
             value_template: '{{ event == "brightness_up_hold" }}'
         sequence:
           - repeat:
-              while: []
+              while:
+                - condition: template
+                  value_template: '{{ event != "brightness_up_release" }}'
               sequence:
                 - service: light.turn_on
                   target:
