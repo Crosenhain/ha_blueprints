@@ -23,60 +23,71 @@ blueprint:
   domain: automation
 
   input:
-    remote:
-      name: IKEA TRADFRI remote control
-      description: Select the remote control you wish to use.
-      selector:
-        device:
-          filter:
-            - integration: mqtt
-              manufacturer: IKEA
-              model: TRADFRI remote control (E1524/E1810)
-    action_entity:
-      name: Action Entity
-      description: Select the entity associated with the remote control.
-      selector:
-        entity:
-          filter:
-            - integration: mqtt
-            - manufacturer: IKEA
-            - model: TRADFRI remote control (E1524/E1810)
-    light:
-      name: Light
-      description: Select the light entity you wish to control.
-      selector:
-        entity:
-          filter:
-            - domain: light
-    speed:
-      name: Speed
-      description: The speed in which to update the light when the button is held.
-      selector:
-        number:
-          min: 100
-          max: 1000
-          step: 100
-          unit_of_measurement: milliseconds
-          mode: slider
-      default: 500
+    required_input:
+      name: Required input 👀
+      icon: mdi:alert-box
+      collapsed: false
+      description: >
+        This input is required for the blueprint to function
+      input:
+        remote:
+          name: Remote
+          description: >
+            The entity to put here is the sensor that Z2M imported that is
+            named like this>
+
+            ```sensor.XXYour_HameXX_action```
+          selector:
+            entity:
+              filter:
+                - integration: mqtt
+                  domain: sensor
+              multiple: false
+      light:
+        name: Light
+        description: Select the light entity you wish to control.
+        selector:
+          entity:
+            filter:
+              - domain: light
+      speed:
+        name: Speed
+        description: The speed in which to update the light when the button is held.
+        selector:
+          number:
+            min: 100
+            max: 1000
+            step: 100
+            unit_of_measurement: milliseconds
+            mode: slider
+        default: 500
 
 mode: restart
 max_exceeded: silent
 
+trigger:
+  - platform: state
+    entity_id: !input remote
+    
 variables:
   var_light: !input light
   var_speed: !input speed
-
-trigger:
-  - platform: state
-    entity_id: !input action_entity
+  event: >
+    {# This covers an anomaly found while testing. #}
+    {% if trigger.to_state.state | default('') %}
+      {{ trigger.to_state.state }}
+    {% else %}
+      {{ trigger.to_state.attributes.action }}
+    {% endif %}
+  entity_id: !input remote
+  friendly_name: '{{ trigger.to_state.attributes.friendly_name }}'
 
 action:
   - choose:
       # Short-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ trigger.to_state.state == "toggle" }}'
+            value_template: '{{ event == "toggle" }}'
         sequence:
           - service: light.toggle
             target:
