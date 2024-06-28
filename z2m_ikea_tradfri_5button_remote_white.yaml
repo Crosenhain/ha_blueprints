@@ -23,44 +23,43 @@ blueprint:
   domain: automation
 
   input:
-    required_input:
-      name: Required input 👀
-      icon: mdi:alert-box
-      collapsed: false
-      description: >
-        This input is required for the blueprint to function
-      input:
-        remote:
-          name: Remote
-          description: >
-            The entity to put here is the sensor that Z2M imported that is
-            named like this>
+    name: Required input 👀
+    icon: mdi:alert-box
+    collapsed: false
+    description: >
+      This input is required for the blueprint to function
+    input:
+      remote:
+        name: Remote
+        description: >
+          The entity to put here is the sensor that Z2M imported that is
+          named like this>
 
-            ```sensor.XXYour_HameXX_action```
-          selector:
-            entity:
-              filter:
-                - integration: mqtt
-                  domain: sensor
-              multiple: false
-      light:
-        name: Light
-        description: Select the light entity you wish to control.
+          ```sensor.XXYour_HameXX_action```
         selector:
           entity:
             filter:
-              - domain: light
-      speed:
-        name: Speed
-        description: The speed in which to update the light when the button is held.
-        selector:
-          number:
-            min: 100
-            max: 1000
-            step: 100
-            unit_of_measurement: milliseconds
-            mode: slider
-        default: 500
+              - integration: mqtt
+                domain: sensor
+            multiple: false
+    light:
+      name: Light
+      description: Select the light entity you wish to control.
+      selector:
+        entity:
+          filter:
+            - domain: light
+    speed:
+      name: Speed
+      description: The speed in which to update the light when the button is held.
+      selector:
+        number:
+          min: 100
+          max: 1000
+          step: 100
+          unit_of_measurement: milliseconds
+          mode: slider
+      default: 500
 
 mode: restart
 max_exceeded: silent
