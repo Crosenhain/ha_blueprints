@@ -59,15 +59,16 @@ variables:
   var_speed: !input speed
 
 trigger:
-  - platform: mqtt_event
-    entity_id: !input remote
+  - platform: device
+    device_id: !input remote
+    type: action
 
 action:
   - choose:
       # Short-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ trigger.event.data.command == "toggle" }}'
+            value_template: '{{ trigger.device.type.subtype == "toggle" }}'
         sequence:
           - service: light.toggle
             target:
