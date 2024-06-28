@@ -89,7 +89,7 @@ action:
       # Long-Press on the power button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "move_to_level_with_on_off" }}'
+            value_template: '{{ event == "toggle_hole" }}'
         sequence:
           - service: light.turn_on
             target:
@@ -101,7 +101,7 @@ action:
       # Short-Press on the dim-up button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "step_with_on_off" }}'
+            value_template: '{{ event == "brightness_up_click" }}'
         sequence:
           - service: light.turn_on
             target:
@@ -113,7 +113,7 @@ action:
       # Long-Press on the dim-up button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "move_with_on_off" }}'
+            value_template: '{{ event == "brightness_up_hold" }}'
         sequence:
           - repeat:
               while: []
@@ -130,7 +130,7 @@ action:
       # Short-Press on the dim-down button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "step" }}'
+            value_template: '{{ event == "brightness_down_click" }}'
         sequence:
           - service: light.turn_on
             target:
@@ -142,7 +142,7 @@ action:
       # Long-Press on the dim-down button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "move" }}'
+            value_template: '{{ event == "brightness_down_hold" }}'
         sequence:
           - repeat:
               while: []
@@ -159,9 +159,7 @@ action:
       # Short-Press on the color-up button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "press" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [256,13,0] }}"
+            value_template: '{{ event == "arrow_right_click" }}'
         sequence:
           - service: light.turn_on
             target:
@@ -178,9 +176,7 @@ action:
       # Long-Press on the color-up button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "hold" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [3328,0] }}"
+            value_template: '{{ event == "arrow_right_hold" }}'
         sequence:
           - repeat:
               while: []
@@ -202,9 +198,7 @@ action:
       # Short-Press on the color-down button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "press" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [257,13,0] }}"
+            value_template: '{{ event == "arrow_left_click" }}'
         sequence:
           - service: light.turn_on
             target:
@@ -221,9 +215,7 @@ action:
       # Long-Press on the color-down button.
       - conditions:
           - condition: template
-            value_template: '{{ event == "hold" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [3329,0] }}"
+            value_template: '{{ event == "arrow_left_hold" }}'
         sequence:
           - repeat:
               while: []
