@@ -11,7 +11,7 @@
 # | Left     | Decrease temperature |
 
 blueprint:
-  source_url: 
+  source_url: https://github.com/Crosenhain/ha_blueprints/blob/main/z2m_ikea_tradfri_5button_remote_white.yaml
 
   name: Z2M - IKEA TRADFRI - 5 Button Remote - Warm White Lights
 
