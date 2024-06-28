@@ -1,6 +1,7 @@
 ---
 # This automation simulates the use of the IKEA TRADFRI Remote control
 # connected through Z2M.
+# Borrowed from https://github.com/niro1987/homeassistant-config/blob/main/blueprints/automation/niro1987/zha_ikea_tradfri_5button_remote_white.yaml and adapted to use Zigbee2MQTT
 
 # | Button   | Action               |
 # | -------- | -------------------- |
