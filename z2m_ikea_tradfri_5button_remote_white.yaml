@@ -27,7 +27,7 @@ blueprint:
       name: IKEA TRADFRI remote control
       description: Select the remote control you wish to use.
       selector:
-        device:
+        entity:
           filter:
             - integration: mqtt
               manufacturer: IKEA
