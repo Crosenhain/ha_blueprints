@@ -32,6 +32,13 @@ blueprint:
             - integration: mqtt
               manufacturer: IKEA
               model: TRADFRI remote control (E1524/E1810)
+    action_entity:
+      name: Action Entity
+      description: Pick the Action eneity
+      selector:
+        entity:
+          filter:
+            - device_id: !input remote
     light:
       name: Light
       description: Select the light entity you wish to control.
@@ -59,12 +66,9 @@ variables:
   var_speed: !input speed
 
 trigger:
-  - platform: device
-    domain: mqtt
-    device_id: !input remote
+  - platform: state
+    entity_id: !input remote
     type: action
-    subtype: toggle
-    id: 'toggle'
 
 action:
   - choose:
