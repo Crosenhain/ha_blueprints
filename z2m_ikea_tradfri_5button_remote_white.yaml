@@ -23,25 +23,19 @@ blueprint:
   domain: automation
 
   input:
-    name: Required input 👀
-    icon: mdi:alert-box
-    collapsed: false
-    description: >
-      This input is required for the blueprint to function
-    input:
-      remote:
-        name: Remote
-        description: >
-          The entity to put here is the sensor that Z2M imported that is
-          named like this>
+    remote:
+      name: Remote
+      description: >
+        The entity to put here is the sensor that Z2M imported that is
+        named like this>
 
-          ```sensor.XXYour_HameXX_action```
-        selector:
-          entity:
-            filter:
-              - integration: mqtt
-                domain: sensor
-            multiple: false
+        ```sensor.XXYour_HameXX_action```
+      selector:
+        entity:
+          filter:
+            - integration: mqtt
+              domain: sensor
+          multiple: false
     light:
       name: Light
       description: Select the light entity you wish to control.
