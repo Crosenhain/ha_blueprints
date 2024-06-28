@@ -34,11 +34,13 @@ blueprint:
               model: TRADFRI remote control (E1524/E1810)
     action_entity:
       name: Action Entity
-      description: Pick the Action entity
+      description: Select the entity associated with the remote control.
       selector:
         entity:
           filter:
-            - device_id: !input remote
+            - integration: mqtt
+            - manufacturer: IKEA
+            - model: TRADFRI remote control (E1524/E1810)
     light:
       name: Light
       description: Select the light entity you wish to control.
