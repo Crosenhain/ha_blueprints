@@ -60,7 +60,7 @@ variables:
 
 trigger:
   - platform: event
-    event_type: zha_event
+    event_type: mqtt_event
     event_data:
       device_id: !input remote
 
