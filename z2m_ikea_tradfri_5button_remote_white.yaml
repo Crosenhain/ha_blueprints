@@ -73,161 +73,161 @@ action:
             target:
               entity_id: !input light
 
-      # Long-Press on the power button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "move_to_level_with_on_off" }}'
-        sequence:
-          - service: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              brightness: 254
-              color_temp: 400
+      # # Long-Press on the power button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "move_to_level_with_on_off" }}'
+      #   sequence:
+      #     - service: light.turn_on
+      #       target:
+      #         entity_id: !input light
+      #       data:
+      #         brightness: 254
+      #         color_temp: 400
 
-      # Short-Press on the dim-up button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "step_with_on_off" }}'
-        sequence:
-          - service: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              brightness_step_pct: 20
-              transition: "{{ (var_speed / 1000)|float }}"
+      # # Short-Press on the dim-up button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "step_with_on_off" }}'
+      #   sequence:
+      #     - service: light.turn_on
+      #       target:
+      #         entity_id: !input light
+      #       data:
+      #         brightness_step_pct: 20
+      #         transition: "{{ (var_speed / 1000)|float }}"
 
-      # Long-Press on the dim-up button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "move_with_on_off" }}'
-        sequence:
-          - repeat:
-              while: []
-              sequence:
-                - service: light.turn_on
-                  target:
-                    entity_id: !input light
-                  data:
-                    brightness_step_pct: 10
-                    transition: "{{ (var_speed / 1000)|float }}"
-                - delay:
-                    milliseconds: !input speed
+      # # Long-Press on the dim-up button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "move_with_on_off" }}'
+      #   sequence:
+      #     - repeat:
+      #         while: []
+      #         sequence:
+      #           - service: light.turn_on
+      #             target:
+      #               entity_id: !input light
+      #             data:
+      #               brightness_step_pct: 10
+      #               transition: "{{ (var_speed / 1000)|float }}"
+      #           - delay:
+      #               milliseconds: !input speed
 
-      # Short-Press on the dim-down button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "step" }}'
-        sequence:
-          - service: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              brightness_step_pct: -20
-              transition: "{{ (var_speed / 1000)|float }}"
+      # # Short-Press on the dim-down button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "step" }}'
+      #   sequence:
+      #     - service: light.turn_on
+      #       target:
+      #         entity_id: !input light
+      #       data:
+      #         brightness_step_pct: -20
+      #         transition: "{{ (var_speed / 1000)|float }}"
 
-      # Long-Press on the dim-down button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "move" }}'
-        sequence:
-          - repeat:
-              while: []
-              sequence:
-                - service: light.turn_on
-                  target:
-                    entity_id: !input light
-                  data:
-                    brightness_step_pct: -10
-                    transition: "{{ (var_speed / 1000)|float }}"
-                - delay:
-                    milliseconds: !input speed
+      # # Long-Press on the dim-down button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "move" }}'
+      #   sequence:
+      #     - repeat:
+      #         while: []
+      #         sequence:
+      #           - service: light.turn_on
+      #             target:
+      #               entity_id: !input light
+      #             data:
+      #               brightness_step_pct: -10
+      #               transition: "{{ (var_speed / 1000)|float }}"
+      #           - delay:
+      #               milliseconds: !input speed
 
-      # Short-Press on the color-up button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "press" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [256,13,0] }}"
-        sequence:
-          - service: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              color_temp: >-
-                {% if state_attr(var_light, "color_temp") - 18 < 153 %}
-                  {{ 153 }}
-                {% else %}
-                  {{ state_attr(var_light, "color_temp") - 18 }}
-                {% endif %}
-              transition: "{{ (var_speed / 1000)|float }}"
+      # # Short-Press on the color-up button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "press" }}'
+      #     - condition: template
+      #       value_template: "{{ trigger.event.data.args == [256,13,0] }}"
+      #   sequence:
+      #     - service: light.turn_on
+      #       target:
+      #         entity_id: !input light
+      #       data:
+      #         color_temp: >-
+      #           {% if state_attr(var_light, "color_temp") - 18 < 153 %}
+      #             {{ 153 }}
+      #           {% else %}
+      #             {{ state_attr(var_light, "color_temp") - 18 }}
+      #           {% endif %}
+      #         transition: "{{ (var_speed / 1000)|float }}"
 
-      # Long-Press on the color-up button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "hold" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [3328,0] }}"
-        sequence:
-          - repeat:
-              while: []
-              sequence:
-                - service: light.turn_on
-                  target:
-                    entity_id: !input light
-                  data:
-                    color_temp: >-
-                      {% if state_attr(var_light, "color_temp") - 18 < 153 %}
-                        {{ 153 }}
-                      {% else %}
-                        {{ state_attr(var_light, "color_temp") - 18 }}
-                      {% endif %}
-                    transition: "{{ (var_speed / 1000)|float }}"
-                - delay:
-                    milliseconds: !input speed
+      # # Long-Press on the color-up button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "hold" }}'
+      #     - condition: template
+      #       value_template: "{{ trigger.event.data.args == [3328,0] }}"
+      #   sequence:
+      #     - repeat:
+      #         while: []
+      #         sequence:
+      #           - service: light.turn_on
+      #             target:
+      #               entity_id: !input light
+      #             data:
+      #               color_temp: >-
+      #                 {% if state_attr(var_light, "color_temp") - 18 < 153 %}
+      #                   {{ 153 }}
+      #                 {% else %}
+      #                   {{ state_attr(var_light, "color_temp") - 18 }}
+      #                 {% endif %}
+      #               transition: "{{ (var_speed / 1000)|float }}"
+      #           - delay:
+      #               milliseconds: !input speed
 
-      # Short-Press on the color-down button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "press" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [257,13,0] }}"
-        sequence:
-          - service: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              color_temp: >-
-                {% if state_attr(var_light, "color_temp") + 18 > 500 %}
-                  {{ 500 }}
-                {% else %}
-                  {{ state_attr(var_light, "color_temp") + 18 }}
-                {% endif %}
-              transition: "{{ (var_speed / 1000)|float }}"
+      # # Short-Press on the color-down button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "press" }}'
+      #     - condition: template
+      #       value_template: "{{ trigger.event.data.args == [257,13,0] }}"
+      #   sequence:
+      #     - service: light.turn_on
+      #       target:
+      #         entity_id: !input light
+      #       data:
+      #         color_temp: >-
+      #           {% if state_attr(var_light, "color_temp") + 18 > 500 %}
+      #             {{ 500 }}
+      #           {% else %}
+      #             {{ state_attr(var_light, "color_temp") + 18 }}
+      #           {% endif %}
+      #         transition: "{{ (var_speed / 1000)|float }}"
 
-      # Long-Press on the color-down button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "hold" }}'
-          - condition: template
-            value_template: "{{ trigger.event.data.args == [3329,0] }}"
-        sequence:
-          - repeat:
-              while: []
-              sequence:
-                - service: light.turn_on
-                  target:
-                    entity_id: !input light
-                  data:
-                    color_temp: >-
-                      {% if state_attr(var_light, "color_temp") + 18 > 500 %}
-                        {{ 500 }}
-                      {% else %}
-                        {{ state_attr(var_light, "color_temp") + 18 }}
-                      {% endif %}
-                    transition: "{{ (var_speed / 1000)|float }}"
-                - delay:
-                    milliseconds: !input speed
+      # # Long-Press on the color-down button.
+      # - conditions:
+      #     - condition: template
+      #       value_template: '{{ trigger.event.data.command == "hold" }}'
+      #     - condition: template
+      #       value_template: "{{ trigger.event.data.args == [3329,0] }}"
+      #   sequence:
+      #     - repeat:
+      #         while: []
+      #         sequence:
+      #           - service: light.turn_on
+      #             target:
+      #               entity_id: !input light
+      #             data:
+      #               color_temp: >-
+      #                 {% if state_attr(var_light, "color_temp") + 18 > 500 %}
+      #                   {{ 500 }}
+      #                 {% else %}
+      #                   {{ state_attr(var_light, "color_temp") + 18 }}
+      #                 {% endif %}
+      #               transition: "{{ (var_speed / 1000)|float }}"
+      #           - delay:
+      #               milliseconds: !input speed
 
     # Any other event will cancel the repeat loops.
     default: []
