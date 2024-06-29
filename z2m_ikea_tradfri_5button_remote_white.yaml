@@ -75,6 +75,17 @@ variables:
   entity_id: !input remote
   friendly_name: '{{ trigger.to_state.attributes.friendly_name }}'
 
+condition:
+  - condition: template
+    value_template: >-
+      {{ event in (
+      'toggle', 'toggle_hold',
+      'brightness_up_click', 'brightness_up_hold', 'brightness_up_release',
+      'brightness_down_click', 'brightness_down_hold', 'brightness_down_release',
+      'arrow_right_click', 'arrow_right_hold', 'arrow_right_release',
+      'arrow_left_click', 'arrow_left_hold', 'arrow_left_release'
+      ) }}
+
 action:
   - choose:
       # Short-Press on the power button.
