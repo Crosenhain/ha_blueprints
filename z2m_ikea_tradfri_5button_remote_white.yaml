@@ -1,15 +1,14 @@
 ---
-# This automation simulates the use of the IKEA TRADFRI Remote control
-# connected through Z2M.
-# Borrowed from https://github.com/niro1987/homeassistant-config/blob/main/blueprints/automation/niro1987/zha_ikea_tradfri_5button_remote_white.yaml and adapted to use Zigbee2MQTT
+# This automation simulates the use of the IKEA TRADFRI Remote control connected through Z2M.
+# Adapted from https://github.com/niro1987/homeassistant-config/blob/main/blueprints/automation/niro1987/zha_ikea_tradfri_5button_remote_white.yaml and adapted to use Zigbee2MQTT
 
-# | Button   | Action               |
-# | -------- | -------------------- |
-# | Power    | Toggle the light     |
-# | Dim-Up   | Increase brightness  |
-# | Dim-Down | Decrease brightness  |
-# | Right    | Increase temperature |
-# | Left     | Decrease temperature |
+# | Button          | Action               |
+# | --------------- | -------------------- |
+# | Power           | Toggle the light     |
+# | Brightness-Up   | Increase brightness  |
+# | Brightness-Down | Decrease brightness  |
+# | Right           | Increase temperature |
+# | Left            | Decrease temperature |
 
 blueprint:
   source_url: https://github.com/Crosenhain/ha_blueprints/blob/main/z2m_ikea_tradfri_5button_remote_white.yaml
@@ -29,7 +28,7 @@ blueprint:
         The entity to put here is the sensor that Z2M imported that is
         named like this>
 
-        ```sensor.XXYour_HameXX_action```
+        ```sensor.switch_name_action```
       selector:
         entity:
           filter:
@@ -137,9 +136,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-              until:
-                - condition: template
-                  value_template: '{{ event == "brightness_up_release" }}'
+        until:
+          - condition: template
+            value_template: '{{ event == "brightness_up_release" }}'
 
       # Short-Press on the dim-down button.
       - conditions:
@@ -169,9 +168,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-              until:
-                - condition: template
-                  value_template: '{{ event == "brightness_down_release" }}'
+        until:
+          - condition: template
+            value_template: '{{ event == "brightness_down_release" }}'
 
       # Short-Press on the color-up button.
       - conditions:
@@ -211,9 +210,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-              until:
-                - condition: template
-                  value_template: '{{ event == "arrow_right_release" }}'
+        until:
+          - condition: template
+            value_template: '{{ event == "arrow_right_release" }}'
 
       # Short-Press on the color-down button.
       - conditions:
@@ -253,9 +252,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-              until:
-                - condition: template
-                  value_template: '{{ event == "arrow_left_release" }}'
+        until:
+          - condition: template
+            value_template: '{{ event == "arrow_left_release" }}'
 
     # Any other event will cancel the repeat loops.
     default: []
