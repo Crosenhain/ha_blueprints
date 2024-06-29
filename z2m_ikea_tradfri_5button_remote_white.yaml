@@ -116,9 +116,7 @@ action:
             value_template: '{{ event == "brightness_up_hold" }}'
         sequence:
           - repeat:
-              while:
-                - condition: template
-                  value_template: '{{ event != "brightness_up_release" }}'
+              while: []
               sequence:
                 - service: light.turn_on
                   target:
@@ -128,6 +126,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
+            until:
+              - condition: template
+                value_template: '{{ event == "brightness_up_release" }}'
 
       # Short-Press on the dim-down button.
       - conditions:
@@ -147,9 +148,7 @@ action:
             value_template: '{{ event == "brightness_down_hold" }}'
         sequence:
           - repeat:
-              while: 
-                - condition: template
-                  value_template: '{{ event != "brightness_down_release" }}'
+              while: []
               sequence:
                 - service: light.turn_on
                   target:
@@ -159,6 +158,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
+            until:
+              - condition: template
+                value_template: '{{ event == "brightness_down_release" }}'
 
       # Short-Press on the color-up button.
       - conditions:
@@ -183,9 +185,7 @@ action:
             value_template: '{{ event == "arrow_right_hold" }}'
         sequence:
           - repeat:
-              while:
-                - condition: template
-                  value_template: '{{ event != "arrow_right_release" }}'
+              while: []
               sequence:
                 - service: light.turn_on
                   target:
@@ -200,6 +200,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
+            until:
+              - condition: template
+                value_template: '{{ event == "arrow_right_release" }}'
 
       # Short-Press on the color-down button.
       - conditions:
@@ -224,9 +227,7 @@ action:
             value_template: '{{ event == "arrow_left_hold" }}'
         sequence:
           - repeat:
-              while:
-              - condition: template
-                value_template: '{{ event != "arrow_left_release" }}'
+              while: []
               sequence:
                 - service: light.turn_on
                   target:
@@ -241,6 +242,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
+            until:
+              - condition: template
+                value_template: '{{ event == "arrow_left_release" }}'
 
     # Any other event will cancel the repeat loops.
     default: []
