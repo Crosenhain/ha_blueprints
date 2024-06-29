@@ -147,7 +147,9 @@ action:
             value_template: '{{ event == "brightness_down_hold" }}'
         sequence:
           - repeat:
-              while: []
+              while: 
+                - condition: template
+                  value_template: '{{ event != "brightness_down_release" }}'
               sequence:
                 - service: light.turn_on
                   target:
@@ -181,7 +183,9 @@ action:
             value_template: '{{ event == "arrow_right_hold" }}'
         sequence:
           - repeat:
-              while: []
+              while:
+                - condition: template
+                  value_template: '{{ event != "arrow_right_release" }}'
               sequence:
                 - service: light.turn_on
                   target:
@@ -220,7 +224,9 @@ action:
             value_template: '{{ event == "arrow_left_hold" }}'
         sequence:
           - repeat:
-              while: []
+              while:
+              - condition: template
+                value_template: '{{ event != "arrow_left_release" }}'
               sequence:
                 - service: light.turn_on
                   target:
