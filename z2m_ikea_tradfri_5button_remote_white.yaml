@@ -137,9 +137,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-            until:
-              - condition: template
-                value_template: '{{ event == "brightness_up_release" }}'
+              until:
+                - condition: template
+                  value_template: '{{ event == "brightness_up_release" }}'
 
       # Short-Press on the dim-down button.
       - conditions:
@@ -169,9 +169,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-            until:
-              - condition: template
-                value_template: '{{ event == "brightness_down_release" }}'
+              until:
+                - condition: template
+                  value_template: '{{ event == "brightness_down_release" }}'
 
       # Short-Press on the color-up button.
       - conditions:
@@ -211,9 +211,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-            until:
-              - condition: template
-                value_template: '{{ event == "arrow_right_release" }}'
+              until:
+                - condition: template
+                  value_template: '{{ event == "arrow_right_release" }}'
 
       # Short-Press on the color-down button.
       - conditions:
@@ -253,9 +253,9 @@ action:
                     transition: "{{ (var_speed / 1000)|float }}"
                 - delay:
                     milliseconds: !input speed
-            until:
-              - condition: template
-                value_template: '{{ event == "arrow_left_release" }}'
+              until:
+                - condition: template
+                  value_template: '{{ event == "arrow_left_release" }}'
 
     # Any other event will cancel the repeat loops.
     default: []
